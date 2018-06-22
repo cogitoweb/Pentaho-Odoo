@@ -10,6 +10,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from odoo.tools import config
 import logging
+import pprint
 import time
 from datetime import datetime
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
@@ -172,6 +173,7 @@ class Report(object):
         self.context = context or {}
         self.prpt_content = None
         self.default_output_type = DEFAULT_OUTPUT_TYPE
+        self.report = None
         self.context_vars = {
                              'ids': self.ids,
                              'uid': self.uid,
@@ -191,6 +193,7 @@ class Report(object):
         report = env['ir.actions.report.xml'].search([('report_name', '=', self.name[len(SERVICE_NAME_PREFIX):]), ('report_type', '=', 'pentaho')], limit=1)
         if not report:
             raise ValidationError(_("Report service name '%s' is not a Pentaho report.") % self.name[len(SERVICE_NAME_PREFIX):])
+        self.report = report
         self.default_output_type = report.pentaho_report_output_type or DEFAULT_OUTPUT_TYPE
         self.prpt_content = base64.decodestring(report.pentaho_file)
 
@@ -240,6 +243,18 @@ class Report(object):
 
         if len(rendered_report) == 0:
             raise ValidationError(_("Pentaho returned no data for the report '%s'. Check report definition and parameters.") % self.name[len(SERVICE_NAME_PREFIX):])
+
+        # If the action configured on the report is server,
+        # it prints the generated document as well.
+
+        env = api.Environment(self.cr, self.uid, self.context_vars)
+        report_model = env['report']
+        behaviour = self.report.behaviour()[self.report.id]
+        printer = behaviour['printer']
+        can_print_report = report_model._can_print_report(behaviour, printer, rendered_report)
+
+        if can_print_report:
+            printer.print_document(self.name, rendered_report, self.report.report_type)
 
         return (rendered_report, output_type)
 

@@ -195,6 +195,7 @@ wrong, or you think would make a great feature, please do let us know at:
     'images': [],
     "depends": ["base",
                 "mail",
+                "base_report_to_printer"
                 ],
     "data": ["report_xml_view.xml",
              'wizard/report_prompt.xml',
