@@ -11,3 +11,4 @@ dist/
 bin/
 lib/
 .vscode/
+.DS_Store
