@@ -8,6 +8,8 @@ from lxml import etree
 
 from datetime import date, datetime
 import pytz
+import logging
+import pprint
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
@@ -17,6 +19,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMA
 from .. import java_odoo
 from ..core import get_proxy_args, clean_proxy_args, VALID_OUTPUT_TYPES, DEFAULT_OUTPUT_TYPE
 
+_logger = logging.getLogger(__name__)
 
 def all_parameters(cls):
     for counter in range(0, java_odoo.MAX_PARAMS):
@@ -270,9 +273,29 @@ class report_prompt_class(models.TransientModel):
                                             }
             if required:
                 result['fields'][field_name]['required'] = required
+
             if type(selection_options) == list:
-                result['fields'][field_name]['type'] = 'selection'
-                result['fields'][field_name]['selection'] = selection_options
+
+                # hack to manage many2one
+                if parameters[self._fields[field_name].index]['variable'].startswith('odoo_model_'):
+
+                    ids = []
+                    for tuple_id in selection_options:
+                        if tuple_id[0]:
+                            ids.append(int(tuple_id[0]))
+
+                    list_ids = ('(%s)' % ','.join([str(i) for i in ids])) if ids else '(0)'
+
+                    model_name = parameters[self._fields[field_name].index]['variable'][11:]
+                    result['fields'][field_name]['type'] = 'many2one'
+                    result['fields'][field_name]['relation'] = model_name
+                    result['fields'][field_name]['searchable'] = True
+                    result['fields'][field_name]['domain'] = "[('id', 'in', %s)]" % list_ids
+
+                else:
+
+                    result['fields'][field_name]['type'] = 'selection'
+                    result['fields'][field_name]['selection'] = selection_options
 
         def add_2m_field(result, field_name, selection_options=False, required=False):
             result['fields'][field_name] = {'relation': 'ir.actions.report.multivalues.promptwizard',
@@ -324,6 +347,7 @@ class report_prompt_class(models.TransientModel):
                            name = field_name,
                            string = parameters[index]['label'],
                            default_focus = default_focus,
+                           options = '{"no_create": True, "no_open": True}',
                            modifiers = '{"required": %s, "invisible": %s}' % 
                                             ('true' if parameters[index].get('mandatory', False) else 'false',
                                              'true' if parameters[index].get('hidden', False) else 'false',
