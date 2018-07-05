@@ -269,6 +269,7 @@ class report_prompt_class(models.TransientModel):
             result['fields'][field_name] = {'index': self._fields[field_name].index,
                                             'type': self._fields[field_name].type,
                                             'string': self._fields[field_name].string,
+                                            'options': '{}',
                                             'views': {}
                                             }
             if required:
@@ -276,8 +277,10 @@ class report_prompt_class(models.TransientModel):
 
             if type(selection_options) == list:
 
+                model_name = parameters[index]['variable']
+
                 # hack to manage many2one
-                if parameters[self._fields[field_name].index]['variable'].startswith('odoo_model_'):
+                if model_name.startswith('odoo_model_'):
 
                     ids = []
                     for tuple_id in selection_options:
@@ -286,9 +289,9 @@ class report_prompt_class(models.TransientModel):
 
                     list_ids = ('(%s)' % ','.join([str(i) for i in ids])) if ids else '(0)'
 
-                    model_name = parameters[self._fields[field_name].index]['variable'][11:]
+                    clean_model_name = model_name[11:]
                     result['fields'][field_name]['type'] = 'many2one'
-                    result['fields'][field_name]['relation'] = model_name
+                    result['fields'][field_name]['relation'] = clean_model_name
                     result['fields'][field_name]['searchable'] = True
                     result['fields'][field_name]['domain'] = "[('id', 'in', %s)]" % list_ids
 
@@ -347,7 +350,8 @@ class report_prompt_class(models.TransientModel):
                            name = field_name,
                            string = parameters[index]['label'],
                            default_focus = default_focus,
-                           options = '{"no_create": True, "no_open": True}',
+                           # no open and no create for m2one
+                           options = '{"no_create": True, "no_open": True}' if parameters[index]['variable'].startswith('odoo_model_') else '{}',
                            modifiers = '{"required": %s, "invisible": %s}' % 
                                             ('true' if parameters[index].get('mandatory', False) else 'false',
                                              'true' if parameters[index].get('hidden', False) else 'false',
