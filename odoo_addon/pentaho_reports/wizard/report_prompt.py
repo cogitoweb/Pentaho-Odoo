@@ -287,7 +287,7 @@ class report_prompt_class(models.TransientModel):
                         if tuple_id[0]:
                             ids.append(int(tuple_id[0]))
 
-                    list_ids = ('(%s)' % ','.join([str(i) for i in ids])) if ids else '(0)'
+                    list_ids = ids
 
                     clean_model_name = model_name[11:]
                     result['fields'][field_name]['type'] = 'many2one'
