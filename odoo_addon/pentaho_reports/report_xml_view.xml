@@ -16,6 +16,7 @@
             <field name='report_type' position='after'>
                 <field name="pentaho_report_output_type" attrs="{'invisible': [('report_type', '!=', 'pentaho')], 'required': [('report_type', '=', 'pentaho')]}"/>
                 <field name="pentaho_file" filename="pentaho_filename" attrs="{'invisible': [('report_type', '!=', 'pentaho')], 'required': [('report_type', '=', 'pentaho')]}"/>
+                <field name="pentaho_context" attrs="{'invisible': [('report_type', '!=', 'pentaho')]}"/>
                 <field name="pentaho_filename" attrs="{'required': [('report_type', '=', 'pentaho')]}" invisible='1'/>
             </field>
         </field>
