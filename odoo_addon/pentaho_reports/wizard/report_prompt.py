@@ -98,7 +98,7 @@ class report_prompt_class(models.TransientModel):
 
         return result
 
-    def _parse_one_report_parameter(self, parameter, context=None):
+    def _parse_one_report_parameter(self, parameter, pentaho_context, context=None):
         """
         Hidden values should be set by default values or context.
 
@@ -168,16 +168,19 @@ class report_prompt_class(models.TransientModel):
         if parameter['attributes'].get('hidden', 'false') == 'true':
             result['hidden'] = True
 
+        if pentaho_context:
+            result['context'] = pentaho_context
+
         return result
 
-    def _parse_report_parameters(self, report_parameters, context=None):
+    def _parse_report_parameters(self, report_parameters, pentaho_context, context=None):
         result = []
         for parameter in report_parameters:
             if not parameter.get('name') in java_odoo.RESERVED_PARAMS.keys():
                 if not parameter.get('attributes',{}):
                     raise ValidationError(_('Parameter received with no attributes.'))
 
-                result.append(self._parse_one_report_parameter(parameter, context=context))
+                result.append(self._parse_one_report_parameter(parameter, pentaho_context, context=context))
 
         if len(result) > java_odoo.MAX_PARAMS:
             raise ValidationError(_('Too many report parameters (%d).') % len(result))
@@ -200,7 +203,7 @@ class report_prompt_class(models.TransientModel):
         proxy = xmlrpclib.ServerProxy(proxy_url)
         report_parameters = proxy.report.getParameterInfo(proxy_argument)
         clean_proxy_args(self, self.env.cr, self.env.uid, prpt_content, proxy_argument)
-        return self._parse_report_parameters(report_parameters, context=self.env.context)
+        return self._parse_report_parameters(report_parameters, report_action.pentaho_context, context=self.env.context)
 
     def report_defaults_dictionary(self, report_action, parameters, x2m_unique_id):
         result = {'output_type': report_action.pentaho_report_output_type or DEFAULT_OUTPUT_TYPE}
