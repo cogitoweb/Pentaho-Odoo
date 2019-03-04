@@ -3,6 +3,7 @@
 
 def migrate(cr, version):
     """Update database from previous versions, after updating module."""
+    return True
 
     cr.execute(
         """
