@@ -2,7 +2,7 @@
 
 {
     "name": "Pentaho Reports for Odoo",
-    "version": "2.0",
+    "version": "10.0.2.1.0",
     "summary": 'Pentaho Report Integration',
     "description": """
 Pentaho - Odoo Report Integration by Willdoo IT
