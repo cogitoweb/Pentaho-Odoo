@@ -19,6 +19,7 @@ class ReportXML(models.Model):
     pentaho_report_model_id = fields.Many2one('ir.model', string='Model')
     pentaho_file = fields.Binary(string='File', filters='*.prpt')
     pentaho_filename = fields.Char(string='Filename', required=False)
+    pentaho_context = field.Text(string='Custom context')
     linked_menu_id = fields.Many2one('ir.ui.menu', string='Linked menu item', index=True)
     created_menu_id = fields.Many2one('ir.ui.menu', string='Created menu item', copy=False)
     # This is not displayed on the client - it is a trigger to indicate that
@@ -50,13 +51,16 @@ class ReportXML(models.Model):
     def create_menu(self, vals):
         view = self.env['ir.ui.view'].search([('model', '=', 'ir.actions.report.promptwizard'), ('type', '=', 'form')], limit=1)
 
+        new_cntx = safe_eval(vals.get('pentaho_context', '{}'))
+        new_cntx['service_name'] = vals.get('report_name', '')
+
         action_vals = {'name': vals.get('name', 'Pentaho Report'),
                        'res_model': 'ir.actions.report.promptwizard',
                        'type' : 'ir.actions.act_window',
                        'view_type': 'form',
                        'view_mode': 'tree,form',
                        'view_id' : view.id,
-                       'context' : "{'service_name': '%s'}" % vals.get('report_name', ''),
+                       'context' : str(new_cntx),
                        'target' : 'new',
                        }
         action = self.env['ir.actions.act_window'].create(action_vals)
