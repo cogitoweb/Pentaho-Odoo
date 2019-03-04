@@ -19,7 +19,7 @@ class ReportXML(models.Model):
     pentaho_report_model_id = fields.Many2one('ir.model', string='Model')
     pentaho_file = fields.Binary(string='File', filters='*.prpt')
     pentaho_filename = fields.Char(string='Filename', required=False)
-    pentaho_context = field.Text(string='Custom context')
+    pentaho_context = fields.Text(string='Custom context')
     linked_menu_id = fields.Many2one('ir.ui.menu', string='Linked menu item', index=True)
     created_menu_id = fields.Many2one('ir.ui.menu', string='Created menu item', copy=False)
     # This is not displayed on the client - it is a trigger to indicate that
