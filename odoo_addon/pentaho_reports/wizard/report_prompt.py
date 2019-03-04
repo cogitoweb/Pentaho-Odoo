@@ -355,6 +355,8 @@ class report_prompt_class(models.TransientModel):
                            default_focus = default_focus,
                            # no open and no create for m2one
                            options = '{"no_create": True, "no_open": True}' if parameters[index]['variable'].startswith('odoo_model_') else '{}',
+                           context = parameters[index].get('context', ''),
+
                            modifiers = '{"required": %s, "invisible": %s}' % 
                                             ('true' if parameters[index].get('mandatory', False) else 'false',
                                              'true' if parameters[index].get('hidden', False) else 'false',
