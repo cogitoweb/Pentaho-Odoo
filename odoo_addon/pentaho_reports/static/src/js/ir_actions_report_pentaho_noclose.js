@@ -1,6 +1,9 @@
-ir_actions_report_xml_pentaho_noclose = function(instance, local, QWeb){
+odoo.define('pentaho_report.report', function (require) {
+  'use strict';
+  
+  var ActionManager = require('web.ActionManager');
 
-  instance.web.ActionManager.include({
+  ActionManager.include({
     ir_actions_report_xml_pentaho_noclose: function(action, options) {
       var self = this;
       instance.web.blockUI();
@@ -36,4 +39,4 @@ ir_actions_report_xml_pentaho_noclose = function(instance, local, QWeb){
       });
     }
   });
-}
+});
