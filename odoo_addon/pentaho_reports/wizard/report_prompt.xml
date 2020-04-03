@@ -16,7 +16,7 @@
                 <group name='parameters'>
                     <field name="output_type"/>
                 </group>
-                <group string='Selections'/>
+                <group name="selections" string='Selections'/>
                 <footer>
                     <button class="oe_highlight" string='Print and close' name='check_report' type='object' />
                     <button class="oe_highlight" string='Print and persist' name='check_report_no_close' type='object' />

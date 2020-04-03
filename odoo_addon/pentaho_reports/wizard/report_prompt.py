@@ -379,7 +379,7 @@ class report_prompt_class(models.TransientModel):
         parameters = self._setup_parameters(report_action)
 
         doc = etree.fromstring(result['arch'])
-        selection_groups = doc.findall('.//group[@string="Selections"]')
+        selection_groups = doc.findall('.//group[@name="selections"]')
 
         first_parameter = {}
         for index in range(0, len(parameters)):
