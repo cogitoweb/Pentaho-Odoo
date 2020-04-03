@@ -2,7 +2,9 @@ odoo.define('pentaho_report.report', function (require) {
   'use strict';
   
   var ActionManager = require('web.ActionManager');
+  var crash_manager = require('web.crash_manager');
   var framework = require('web.framework');
+  var pyeval = require('web.pyeval');
   var session = require('web.session');
 
   ActionManager.include({
