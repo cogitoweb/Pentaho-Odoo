@@ -522,27 +522,27 @@ msgstr "Rich Text (rtf)"
 #. module: pentaho_reports
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_multivalues_promptwizard_selected
 msgid "Selected"
-msgstr "Selezionato"
+msgstr "Selected"
 
 #. module: pentaho_reports
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_multivalues_promptwizard_sel_int
 msgid "Selection Integer"
-msgstr "Parametro intero"
+msgstr "Selection Integer"
 
 #. module: pentaho_reports
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_multivalues_promptwizard_sel_num
 msgid "Selection Number"
-msgstr "Parametro numero"
+msgstr "Selection Number"
 
 #. module: pentaho_reports
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_multivalues_promptwizard_sel_str
 msgid "Selection String"
-msgstr "Parametro stringa"
+msgstr "Selection String"
 
 #. module: pentaho_reports
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_multivalues_promptwizard_name
 msgid "Selection Value"
-msgstr "Parametro valore"
+msgstr "Selection Value"
 
 #. module: pentaho_reports
 #: model:ir.ui.view,arch_db:pentaho_reports.wiz_pentaho_report_prompt
@@ -601,7 +601,7 @@ msgstr "Parametri"
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_promptwizard_param_048_string_value
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_promptwizard_param_049_string_value
 msgid "String Value"
-msgstr "Valore stringa"
+msgstr "String Value"
 
 #. module: pentaho_reports
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_promptwizard_param_000_time_value
@@ -655,7 +655,7 @@ msgstr "Valore stringa"
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_promptwizard_param_048_time_value
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_promptwizard_param_049_time_value
 msgid "Time Value"
-msgstr "Valore data"
+msgstr "Time Value"
 
 #. module: pentaho_reports
 #: code:addons/pentaho_reports/wizard/report_prompt.py:186
@@ -703,7 +703,7 @@ msgstr "ir.actions.report.xml"
 #. module: pentaho_reports
 #: model:ir.ui.view,arch_db:pentaho_reports.wiz_pentaho_report_prompt
 msgid "or"
-msgstr "o"
+msgstr "oppure"
 
 #. module: pentaho_reports
 #: model:ir.model.fields,field_description:pentaho_reports.field_ir_actions_report_promptwizard_parameters_dictionary
