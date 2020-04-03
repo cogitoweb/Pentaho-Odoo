@@ -1,4 +1,6 @@
-instance.web.ActionManager.include({
+ir_actions_report_xml_pentaho_noclose = function(instance, local, QWeb){
+
+  instance.web.ActionManager.include({
     ir_actions_report_xml_pentaho_noclose: function(action, options) {
       var self = this;
       instance.web.blockUI();
@@ -34,3 +36,4 @@ instance.web.ActionManager.include({
       });
     }
   });
+}
