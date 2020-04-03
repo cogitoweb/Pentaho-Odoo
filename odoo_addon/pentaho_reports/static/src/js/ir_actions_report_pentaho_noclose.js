@@ -3,6 +3,7 @@ odoo.define('pentaho_report.report', function (require) {
   
   var ActionManager = require('web.ActionManager');
   var framework = require('web.framework');
+  var session = require('web.session');
 
   ActionManager.include({
     ir_actions_report_xml_pentaho_noclose: function(action, options) {
