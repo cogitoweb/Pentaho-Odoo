@@ -197,10 +197,12 @@ wrong, or you think would make a great feature, please do let us know at:
                 "mail",
                 "base_report_to_printer"
                 ],
-    "data": ["report_xml_view.xml",
-             'wizard/report_prompt.xml',
-             'data/config_data.xml',
-             ],
+    "data": [
+        'assets.xml',
+        'report_xml_view.xml',
+        'wizard/report_prompt.xml',
+        'data/config_data.xml',
+      ],
     'demo': [],
     'qweb': [],
     'installable': True,

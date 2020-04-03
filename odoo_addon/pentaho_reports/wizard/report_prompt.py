@@ -448,12 +448,22 @@ class report_prompt_class(models.TransientModel):
                 }
         return self._print_report(data)
 
+    # noclose hack
+    @api.multi
+    def check_report_no_close(self):
+        
+        return self.with_context(no_close=True).check_report()
+
     def _print_report(self, data):
+
+        type_action = 'ir.actions.report.xml_pentaho_noclose' if self.\
+            context.get('no_close', False) else 'ir.actions.report.xml'
+
         return {
-                'type': 'ir.actions.report.xml',
-                'report_name': self.env.context.get('service_name', ''),
-                'datas': data,
-                }
+            'type': type_action,
+            'report_name': self.env.context.get('service_name', ''),
+            'datas': data,
+        }
 
 
 class report_prompt_m2m(models.TransientModel):
