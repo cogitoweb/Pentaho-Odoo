@@ -19,7 +19,7 @@
                 <group string='Selections'/>
                 <footer>
                     <button class="oe_highlight" string='Print and close' name='check_report' type='object' />
-                    <button class="oe_highlight" string='Print' name='check_report_no_close' type='object' />
+                    <button class="oe_highlight" string='Print and persist' name='check_report_no_close' type='object' />
                     or
                     <button class="oe_link" string='_Cancel' special='cancel'/>
                 </footer>
