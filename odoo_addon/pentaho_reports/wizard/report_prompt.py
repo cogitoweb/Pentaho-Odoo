@@ -456,7 +456,7 @@ class report_prompt_class(models.TransientModel):
 
     def _print_report(self, data):
 
-        type_action = 'ir.actions.report.xml_pentaho_noclose' if self.\
+        type_action = 'ir.actions.report.xml_pentaho_noclose' if self.env.\
             context.get('no_close', False) else 'ir.actions.report.xml'
 
         return {
