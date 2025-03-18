@@ -56,7 +56,7 @@ PARAM_VALUES = {
                               'value': PARAM_XXX_STRING_VALUE,
                               'value_list': PARAM_XXX_2M_VALUE,
                               'if_false': '',
-                              'py_types': (str, unicode)},
+                              'py_types': (str, str)},
                 TYPE_BOOLEAN: {
                                'value': PARAM_XXX_BOOLEAN_VALUE,
                                'if_false': False,
@@ -65,7 +65,7 @@ PARAM_VALUES = {
                                'value': PARAM_XXX_INTEGER_VALUE,
                                'value_list': PARAM_XXX_2M_VALUE,
                                'if_false': 0,
-                               'py_types': (int, long)},
+                               'py_types': (int, int)},
                 TYPE_NUMBER: {
                               'value': PARAM_XXX_NUMBER_VALUE,
                               'value_list': PARAM_XXX_2M_VALUE,
@@ -75,13 +75,13 @@ PARAM_VALUES = {
                 TYPE_DATE: {
                             'value': PARAM_XXX_DATE_VALUE,
                             'if_false': '',
-                            'py_types': (str, unicode),
+                            'py_types': (str, str),
                             'convert': lambda x: datetime.strptime(x, '%Y-%m-%d'),
                             'conv_default': lambda x: datetime.strptime(x.value, '%Y%m%dT%H:%M:%S').strftime('%Y-%m-%d')},
                 TYPE_TIME: {
                             'value': PARAM_XXX_TIME_VALUE,
                             'if_false': '',
-                            'py_types': (str, unicode),
+                            'py_types': (str, str),
                             'convert': lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S'),
                             'conv_default': lambda x: datetime.strptime(x.value, '%Y%m%dT%H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')},
                 }

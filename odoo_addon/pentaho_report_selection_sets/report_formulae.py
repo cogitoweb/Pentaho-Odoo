@@ -11,7 +11,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMA
 
 from odoo.addons.pentaho_reports import java_odoo
 
-import report_formulae_definitions
+from . import report_formulae_definitions
 
 PARAM_XXX_FORMULA = 'param_%03i_formula'
 
@@ -61,7 +61,7 @@ def discard_firstchar(s):
     return s[1:].strip()
 
 def variable_ignore_case(known_variables, key):
-    for x in known_variables.iterkeys():
+    for x in known_variables.keys():
         if x.lower() == key.lower():
             return x, known_variables[x]
     return None, {}

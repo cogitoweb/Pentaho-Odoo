@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-import xmlrpclib
+import xmlrpc.client
 import base64
 import json
 
@@ -132,7 +132,7 @@ class report_prompt_class(models.TransientModel):
         if java_list:
             result['multi_select'] = True
 
-        if parameter['name'] in context.get('pentaho_defaults', {}).keys():
+        if parameter['name'] in list(context.get('pentaho_defaults', {}).keys()):
             result['default'] = context['pentaho_defaults'][parameter['name']]
 
         elif parameter.get('default_value', False):
@@ -176,7 +176,7 @@ class report_prompt_class(models.TransientModel):
     def _parse_report_parameters(self, report_parameters, pentaho_context, context=None):
         result = []
         for parameter in report_parameters:
-            if not parameter.get('name') in java_odoo.RESERVED_PARAMS.keys():
+            if not parameter.get('name') in list(java_odoo.RESERVED_PARAMS.keys()):
                 if not parameter.get('attributes',{}):
                     raise ValidationError(_('Parameter received with no attributes.'))
 
@@ -200,7 +200,7 @@ class report_prompt_class(models.TransientModel):
                                                                                                    'uid': self.env.uid,
                                                                                                    'context': self.env.context,
                                                                                                    })
-        proxy = xmlrpclib.ServerProxy(proxy_url)
+        proxy = xmlrpc.client.ServerProxy(proxy_url)
         report_parameters = proxy.report.getParameterInfo(proxy_argument)
         clean_proxy_args(self, self.env.cr, self.env.uid, prpt_content, proxy_argument)
         return self._parse_report_parameters(report_parameters, report_action.pentaho_context, context=self.env.context)
@@ -315,7 +315,7 @@ class report_prompt_class(models.TransientModel):
 
         def add_subelement(element, type, **kwargs):
             sf = etree.SubElement(element, type)
-            for k, v in kwargs.iteritems():
+            for k, v in kwargs.items():
                 if v is not None:
                     sf.set(k, v)
 

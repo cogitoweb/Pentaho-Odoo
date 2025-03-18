@@ -1,3 +1,3 @@
 # -*- encoding: utf-8 -*-
 
-import store_selections
+from . import store_selections

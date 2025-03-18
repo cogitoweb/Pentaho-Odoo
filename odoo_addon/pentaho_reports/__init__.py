@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-import core
-import res_users
-import ir_actions
-import java_odoo
-import wizard
+from . import core
+from . import res_users
+from . import ir_actions
+from . import java_odoo
+from . import wizard

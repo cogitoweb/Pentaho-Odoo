@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import pentaho_auth_crypt
+from . import pentaho_auth_crypt

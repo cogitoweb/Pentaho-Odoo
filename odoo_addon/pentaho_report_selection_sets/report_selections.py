@@ -15,7 +15,7 @@ from odoo.tools.misc import frozendict
 from odoo.addons.pentaho_reports import java_odoo
 from odoo.addons.pentaho_reports.core import VALID_OUTPUT_TYPES
 
-import report_formulae
+from . import report_formulae
 
 
 class selection_set_header(models.Model):
@@ -190,7 +190,7 @@ class report_prompt_with_selection_set(models.TransientModel):
 
         def add_subelement(element, type, **kwargs):
             sf = etree.SubElement(element, type)
-            for k, v in kwargs.iteritems():
+            for k, v in kwargs.items():
                 if v is not None:
                     sf.set(k, v)
 
@@ -216,5 +216,5 @@ class report_prompt_with_selection_set(models.TransientModel):
             parameters = json.loads(self.parameters_dictionary)
             values_dict = self.selectionset_id.selections_to_dictionary(parameters, self.x2m_unique_id)
 
-            for k, v in values_dict.iteritems():
+            for k, v in values_dict.items():
                 self.__setattr__(k, v)

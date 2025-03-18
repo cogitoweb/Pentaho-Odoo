@@ -2,7 +2,7 @@
 # Todo:
 #    multiple prpt files for one action - allows for alternate formats.
 
-import xmlrpclib
+import xmlrpc.client
 import base64
 
 from odoo.report.interface import report_int
@@ -130,7 +130,7 @@ def get_proxy_args(instance, cr, uid, prpt_content, context_vars={}):
     password_to_use = env['res.users'].browse(uid).pentaho_pass_token()
 
     proxy_argument = {
-                      'prpt_file_content': xmlrpclib.Binary(prpt_content),
+                      'prpt_file_content': xmlrpc.client.Binary(prpt_content),
                       'connection_settings': {'odoo': {'host': xml_interface,
                                                        'port': xml_port,
                                                        'db': cr.dbname,
@@ -138,7 +138,7 @@ def get_proxy_args(instance, cr, uid, prpt_content, context_vars={}):
                                                        'password': password_to_use,
                                                        },
                                               },
-                      'report_parameters': dict([(param_name, param_formula(instance, cr, uid, context_vars)) for (param_name, param_formula) in RESERVED_PARAMS.iteritems() if param_formula(instance, cr, uid, context_vars)]),
+                      'report_parameters': dict([(param_name, param_formula(instance, cr, uid, context_vars)) for (param_name, param_formula) in RESERVED_PARAMS.items() if param_formula(instance, cr, uid, context_vars)]),
                       }
 
     postgresconfig_host = IRConfig.get_param('pentaho.postgres.host', default='localhost')
@@ -211,7 +211,7 @@ class Report(object):
         self.setup_report()
 
         proxy_url, proxy_argument = get_proxy_args(self, self.cr, self.uid, self.prpt_content, self.context_vars)
-        proxy = xmlrpclib.ServerProxy(proxy_url)
+        proxy = xmlrpc.client.ServerProxy(proxy_url)
         result = proxy.report.getParameterInfo(proxy_argument)
 
         clean_proxy_args(self, self.cr, self.uid, self.prpt_content, proxy_argument)
@@ -219,7 +219,7 @@ class Report(object):
 
     def execute_report(self):
         proxy_url, proxy_argument = get_proxy_args(self, self.cr, self.uid, self.prpt_content, self.context_vars)
-        proxy = xmlrpclib.ServerProxy(proxy_url)
+        proxy = xmlrpc.client.ServerProxy(proxy_url)
         proxy_parameter_info = proxy.report.getParameterInfo(proxy_argument)
 
         output_type = self.data and self.data.get('output_type', False) or self.default_output_type or DEFAULT_OUTPUT_TYPE
@@ -228,7 +228,7 @@ class Report(object):
         if self.data and self.data.get('variables', False):
             proxy_argument['report_parameters'].update(self.data['variables'])
             for parameter in proxy_parameter_info:
-                if parameter['name'] in proxy_argument['report_parameters'].keys():
+                if parameter['name'] in list(proxy_argument['report_parameters'].keys()):
                     value_type = parameter['value_type']
                     java_list, value_type = check_java_list(value_type)
                     if not value_type == 'java.lang.Object' and PARAM_VALUES[JAVA_MAPPING[value_type](parameter['attributes'].get('data-format', False))].get('convert', False):

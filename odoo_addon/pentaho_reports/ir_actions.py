@@ -88,7 +88,7 @@ class ReportXML(models.Model):
             if report.created_menu_id and not report.linked_menu_id:
                 report.delete_menu()
             if report.report_type == 'pentaho' and report.linked_menu_id:
-                groups_id = [(6, 0, map(lambda x: x.id, report.groups_id))]
+                groups_id = [(6, 0, [x.id for x in report.groups_id])]
                 if not report.created_menu_id:
                     report.created_menu_id = self.create_menu({'name': report.name,
                                                                'linked_menu_id': report.linked_menu_id.id,
