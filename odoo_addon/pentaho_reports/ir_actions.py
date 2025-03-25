@@ -177,5 +177,5 @@ class ReportXML(models.Model):
         path = addons_path + os.sep + name
 
         with open(path, "rb") as report_file:
-            data = base64.encodestring(report_file.read())
+            data = base64.b64encode(report_file.read())
         return data
