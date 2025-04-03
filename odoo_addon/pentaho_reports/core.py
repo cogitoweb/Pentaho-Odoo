@@ -195,7 +195,7 @@ class Report(object):
             raise ValidationError(_("Report service name '%s' is not a Pentaho report.") % self.name[len(SERVICE_NAME_PREFIX):])
         self.report = report
         self.default_output_type = report.pentaho_report_output_type or DEFAULT_OUTPUT_TYPE
-        self.prpt_content = base64.decodestring(report.pentaho_file)
+        self.prpt_content = base64.b64decode(report.pentaho_file)
 
     def execute(self):
         self.setup_report()
