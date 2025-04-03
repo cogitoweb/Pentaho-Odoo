@@ -194,7 +194,7 @@ class report_prompt_class(models.TransientModel):
         return report_action
 
     def _setup_parameters(self, report_action):
-        prpt_content = base64.decodestring(report_action.pentaho_file)
+        prpt_content = base64.b64decode(report_action.pentaho_file)
         proxy_url, proxy_argument = get_proxy_args(self, self.env.cr, self.env.uid, prpt_content, {
                                                                                                    'ids': [],           # meaningless in this context, so pass nothing...
                                                                                                    'uid': self.env.uid,
