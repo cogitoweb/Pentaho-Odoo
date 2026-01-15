@@ -305,7 +305,7 @@ class PentahoReportOdooInterface(report_int):
                     ctx.pop('default_type', None)
                     IRAttachment.create({
                                          'name': name,
-                                         'datas': base64.encodestring(rendered_report),
+                                         'datas': base64.encodebytes(rendered_report),
                                          'datas_fname': name,
                                          'res_model': model,
                                          'res_name': aname,
